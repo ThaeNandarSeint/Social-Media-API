@@ -1,9 +1,9 @@
 const { catchAsync } = require('../utils/error_handler.util');
 const { sendSuccessResponse } = require('../utils/response.util');
 
-module.exports = ({ userService }) => {
-  const getAllUsers = catchAsync(async (req, res) => {
-    const data = await userService.getAllUsers(req.query);
+module.exports = ({ authService }) => {
+  const register = catchAsync(async (req, res) => {
+    const data = await authService.register(req.body);
 
     sendSuccessResponse({
       res,
@@ -12,6 +12,6 @@ module.exports = ({ userService }) => {
   });
 
   return {
-    getAllUsers,
+    register,
   };
 };

@@ -8,15 +8,27 @@ module.exports = ({ userModel }) => {
       filter.$or = [{ name: regex }];
     }
 
-    const [data, count] = await Promise.all([
+    const [users, count] = await Promise.all([
       userModel.find(filter).sort(sort).skip(skip).limit(limit),
       userModel.find(filter).countDocuments(),
     ]);
 
-    return { data, count };
+    return { count, users };
+  };
+
+  const getUserByUniqueField = async (field, value) => {
+    return await userModel.findOne({ [field]: value });
+  };
+
+  const createUser = async (data) => {
+    const user = await userModel.create(data);
+    user.password = undefined;
+    return user;
   };
 
   return {
     getAllUsers,
+    getUserByUniqueField,
+    createUser,
   };
 };
