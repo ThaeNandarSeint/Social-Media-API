@@ -29,9 +29,19 @@ module.exports = ({ userService }) => {
     });
   });
 
+  const getUserById = catchAsync(async (req, res) => {
+    const data = await userService.getUserById(req.params.id);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     getAllUsers,
     getMyInfo,
     updateOwnPassword,
+    getUserById,
   };
 };

@@ -11,12 +11,15 @@ module.exports = ({ userRepository }) => {
   };
 
   const getUserById = async (id) => {
-    return await userRepository.getUserById(id);
+    const user = await userRepository.getUserById(id);
+    if (!user) throw ApiError.badRequest(USER_NOT_FOUND);
+    return user;
   };
 
   const updateUser = async (id, data) => {
     const user = await userRepository.updateUserById(id, data);
     if (!user) throw ApiError.badRequest(USER_NOT_FOUND);
+    return user;
   };
 
   const updateOwnPassword = async (id, data) => {

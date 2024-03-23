@@ -1,4 +1,6 @@
 const { z } = require('zod');
+const { PARAM_ID } = require('./param_id.schema');
+const { BASE_QUERY } = require('./query.schema');
 
 const BASE_USER = z.object({
   body: z.object({
@@ -27,7 +29,13 @@ const UPDATE_OWN_PASSWORD = z.object({
   }),
 });
 
+const GET_USER = PARAM_ID;
+
+const GET_ALL_USERS = BASE_QUERY;
+
 module.exports = {
   BASE_USER,
   UPDATE_OWN_PASSWORD,
+  GET_USER,
+  GET_ALL_USERS,
 };

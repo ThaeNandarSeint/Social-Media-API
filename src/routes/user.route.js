@@ -1,19 +1,26 @@
 const { container } = require('../loaders/container.loader');
 const { authenticate } = require('../middlewares/authenticate.middleware');
 const { validateSchema } = require('../middlewares/validate_schema.middleware');
-const { UPDATE_OWN_PASSWORD } = require('../schemas/user.schema');
+const {
+  UPDATE_OWN_PASSWORD,
+  GET_USER,
+  GET_ALL_USERS,
+} = require('../schemas/user.schema');
 
 const router = require('express').Router();
 
 const userController = container.resolve('userController');
 
-router.get('/', authenticate, userController.getAllUsers);
+router.use(authenticate);
 
-router.get('/me', authenticate, userController.getMyInfo);
+router.get('/', validateSchema(GET_ALL_USERS), userController.getAllUsers);
+
+router.get('/me', userController.getMyInfo);
+
+router.get('/:id', validateSchema(GET_USER), userController.getUserById);
 
 router.patch(
   '/me/password',
-  authenticate,
   validateSchema(UPDATE_OWN_PASSWORD),
   userController.updateOwnPassword
 );
