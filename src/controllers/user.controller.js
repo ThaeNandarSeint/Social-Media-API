@@ -38,10 +38,20 @@ module.exports = ({ userService }) => {
     });
   });
 
+  const updateOwnProfile = catchAsync(async (req, res) => {
+    const data = await userService.updateUser(req.user._id, req.body);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     getAllUsers,
     getMyInfo,
     updateOwnPassword,
     getUserById,
+    updateOwnProfile,
   };
 };

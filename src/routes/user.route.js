@@ -5,6 +5,7 @@ const {
   UPDATE_OWN_PASSWORD,
   GET_USER,
   GET_ALL_USERS,
+  UPDATE_OWN_PROFILE,
 } = require('../schemas/user.schema');
 
 const router = require('express').Router();
@@ -23,6 +24,12 @@ router.patch(
   '/me/password',
   validateSchema(UPDATE_OWN_PASSWORD),
   userController.updateOwnPassword
+);
+
+router.patch(
+  '/me',
+  validateSchema(UPDATE_OWN_PROFILE),
+  userController.updateOwnProfile
 );
 
 module.exports = router;
