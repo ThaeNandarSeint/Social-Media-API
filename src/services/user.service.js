@@ -1,3 +1,10 @@
+const {
+  INCORRECT_PASSWORD,
+} = require('../constants/errors/auth.error.constant');
+const { USER_NOT_FOUND } = require('../constants/errors/user.error.constant');
+const { verifyPassword } = require('../utils/auth.util');
+const { ApiError } = require('../utils/error_handler.util');
+
 module.exports = ({ userRepository }) => {
   const getAllUsers = async (query) => {
     return await userRepository.getAllUsers(query);
@@ -7,8 +14,29 @@ module.exports = ({ userRepository }) => {
     return await userRepository.getUserById(id);
   };
 
+  const updateUser = async (id, data) => {
+    const user = await userRepository.updateUserById(id, data);
+    if (!user) throw ApiError.badRequest(USER_NOT_FOUND);
+  };
+
+  const updateOwnPassword = async (id, data) => {
+    const { oldPassword, password } = data;
+
+    const user = await userRepository.getUserById(id, '+password');
+
+    const isCorrectPassword = await verifyPassword(oldPassword, user.password);
+
+    if (!isCorrectPassword) throw ApiError.badRequest(INCORRECT_PASSWORD);
+
+    return await userRepository.updateUserById(id, {
+      password,
+    });
+  };
+
   return {
     getAllUsers,
     getUserById,
+    updateUser,
+    updateOwnPassword,
   };
 };

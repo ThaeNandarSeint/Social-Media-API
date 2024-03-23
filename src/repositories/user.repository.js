@@ -20,8 +20,8 @@ module.exports = ({ userModel }) => {
     return await userModel.findOne({ [field]: value }).select(select);
   };
 
-  const getUserById = async (id) => {
-    return await userModel.findById(id);
+  const getUserById = async (id, select = '-password') => {
+    return await userModel.findById(id).select(select);
   };
 
   const createUser = async (data) => {
@@ -30,10 +30,15 @@ module.exports = ({ userModel }) => {
     return user;
   };
 
+  const updateUserById = async (id, data) => {
+    return await userModel.findByIdAndUpdate(id, data, { new: true });
+  };
+
   return {
     getAllUsers,
     getUserByUniqueField,
     getUserById,
     createUser,
+    updateUserById,
   };
 };

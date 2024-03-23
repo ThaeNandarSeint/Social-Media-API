@@ -20,8 +20,18 @@ module.exports = ({ userService }) => {
     });
   });
 
+  const updateOwnPassword = catchAsync(async (req, res) => {
+    const data = await userService.updateOwnPassword(req.user._id, req.body);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     getAllUsers,
     getMyInfo,
+    updateOwnPassword,
   };
 };

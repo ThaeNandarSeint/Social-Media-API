@@ -14,6 +14,20 @@ const BASE_USER = z.object({
   }),
 });
 
+const UPDATE_OWN_PASSWORD = z.object({
+  body: z.object({
+    oldPassword: z
+      .string()
+      .min(8, 'Password must have at least 8 characters.')
+      .max(16, 'Password exceeds a maximum of 16 characters.'),
+    password: z
+      .string()
+      .min(8, 'Password must have at least 8 characters.')
+      .max(16, 'Password exceeds a maximum of 16 characters.'),
+  }),
+});
+
 module.exports = {
   BASE_USER,
+  UPDATE_OWN_PASSWORD,
 };
