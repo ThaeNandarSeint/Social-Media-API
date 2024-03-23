@@ -16,8 +16,8 @@ module.exports = ({ userModel }) => {
     return { count, users };
   };
 
-  const getUserByUniqueField = async (field, value) => {
-    return await userModel.findOne({ [field]: value });
+  const getUserByUniqueField = async (field, value, select = '-password') => {
+    return await userModel.findOne({ [field]: value }).select(select);
   };
 
   const createUser = async (data) => {

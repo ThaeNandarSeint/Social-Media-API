@@ -1,5 +1,8 @@
-const { USER_ALREADY_EXIST } = require('../constants/auth_error.constant');
-const { generateToken } = require('../utils/auth.util');
+const {
+  USER_ALREADY_EXIST,
+  WRONG_CREDENTIALS,
+} = require('../constants/auth_error.constant');
+const { generateToken, verifyPassword } = require('../utils/auth.util');
 const { ApiError } = require('../utils/error_handler.util');
 
 module.exports = ({ userRepository }) => {
@@ -11,9 +14,7 @@ module.exports = ({ userRepository }) => {
       email
     );
 
-    if (existingUser) {
-      throw ApiError.badRequest(USER_ALREADY_EXIST);
-    }
+    if (existingUser) throw ApiError.badRequest(USER_ALREADY_EXIST);
 
     const user = await userRepository.createUser(payload);
 
@@ -22,7 +23,30 @@ module.exports = ({ userRepository }) => {
     return { user, token };
   };
 
+  const login = async (payload) => {
+    const { email, password } = payload;
+
+    const user = await userRepository.getUserByUniqueField(
+      'email',
+      email,
+      '+password'
+    );
+
+    if (!user) throw ApiError.badRequest(WRONG_CREDENTIALS);
+
+    const isCorrectPassword = await verifyPassword(password, user.password);
+
+    if (!isCorrectPassword) throw ApiError.badRequest(WRONG_CREDENTIALS);
+
+    user.password = undefined;
+
+    const token = await generateToken({ userId: user._id });
+
+    return { user, token };
+  };
+
   return {
     register,
+    login,
   };
 };

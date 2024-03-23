@@ -5,7 +5,7 @@ const {
   ACCESS_TOKEN_EXPIRE_TIME,
 } = require('../constants/env.constant');
 
-const verifyPassword = async ({ plainText, encrypted }) => {
+const verifyPassword = async (plainText, encrypted) => {
   return await bcrypt.compare(plainText, encrypted);
 };
 

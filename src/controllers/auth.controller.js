@@ -11,7 +11,17 @@ module.exports = ({ authService }) => {
     });
   });
 
+  const login = catchAsync(async (req, res) => {
+    const data = await authService.login(req.body);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     register,
+    login,
   };
 };

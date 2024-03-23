@@ -1,10 +1,18 @@
 const { z } = require('zod');
 const { BASE_USER } = require('./user.schema');
 
-const REGISTER_USER = z.object({
+const REGISTER = z.object({
   body: BASE_USER.shape.body.strict(),
 });
 
+const LOGIN = z.object({
+  body: BASE_USER.shape.body.pick({
+    email: true,
+    password: true,
+  }),
+});
+
 module.exports = {
-  REGISTER_USER,
+  REGISTER,
+  LOGIN,
 };
