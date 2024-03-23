@@ -11,7 +11,17 @@ module.exports = ({ userService }) => {
     });
   });
 
+  const getMyInfo = catchAsync(async (req, res) => {
+    const data = await userService.getUserById(req.user.id);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     getAllUsers,
+    getMyInfo,
   };
 };

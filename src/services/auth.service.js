@@ -1,7 +1,9 @@
 const {
-  USER_ALREADY_EXIST,
   WRONG_CREDENTIALS,
-} = require('../constants/auth_error.constant');
+} = require('../constants/errors/auth.error.constant');
+const {
+  USER_ALREADY_EXIST,
+} = require('../constants/errors/user.error.constant');
 const { generateToken, verifyPassword } = require('../utils/auth.util');
 const { ApiError } = require('../utils/error_handler.util');
 

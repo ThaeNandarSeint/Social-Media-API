@@ -1,4 +1,4 @@
 module.exports = {
+  USER_NOT_FOUND: 'User not found.',
   USER_ALREADY_EXIST: 'User already exists.',
-  WRONG_CREDENTIALS: 'Wrong credentials.',
 };

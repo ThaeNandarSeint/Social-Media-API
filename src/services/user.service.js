@@ -3,7 +3,12 @@ module.exports = ({ userRepository }) => {
     return await userRepository.getAllUsers(query);
   };
 
+  const getUserById = async (id) => {
+    return await userRepository.getUserById(id);
+  };
+
   return {
     getAllUsers,
+    getUserById,
   };
 };

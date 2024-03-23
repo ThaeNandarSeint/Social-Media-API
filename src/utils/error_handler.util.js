@@ -3,7 +3,7 @@ const {
   NOT_AUTHENTICATED,
   NOT_AUTHORIZED,
   END_POINT_NOT_FOUND,
-} = require('../constants/global_error.constant');
+} = require('../constants/errors/global.error.constant');
 
 class ApiError extends Error {
   constructor(message, statusCode, data = null) {

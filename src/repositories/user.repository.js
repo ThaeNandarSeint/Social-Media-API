@@ -20,6 +20,10 @@ module.exports = ({ userModel }) => {
     return await userModel.findOne({ [field]: value }).select(select);
   };
 
+  const getUserById = async (id) => {
+    return await userModel.findById(id);
+  };
+
   const createUser = async (data) => {
     const user = await userModel.create(data);
     user.password = undefined;
@@ -29,6 +33,7 @@ module.exports = ({ userModel }) => {
   return {
     getAllUsers,
     getUserByUniqueField,
+    getUserById,
     createUser,
   };
 };

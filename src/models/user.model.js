@@ -26,9 +26,9 @@ const userSchema = new Schema(
       type: String,
       select: false,
     },
-    isDisabled: {
+    isActive: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   {
