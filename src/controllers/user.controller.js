@@ -12,7 +12,7 @@ module.exports = ({ userService }) => {
   });
 
   const getMyInfo = catchAsync(async (req, res) => {
-    const data = await userService.getUserById(req.user.id);
+    const data = await userService.getUserById(req.user._id);
 
     sendSuccessResponse({
       res,

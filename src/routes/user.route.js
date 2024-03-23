@@ -7,4 +7,6 @@ const userController = container.resolve('userController');
 
 router.get('/', authenticate, userController.getAllUsers);
 
+router.get('/me', authenticate, userController.getMyInfo);
+
 module.exports = router;
