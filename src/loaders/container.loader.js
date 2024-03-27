@@ -1,56 +1,75 @@
 const awilix = require('awilix');
-const userController = require('../controllers/user.controller');
-const authController = require('../controllers/auth.controller');
-const postController = require('../controllers/post.controller');
-
-const userService = require('../services/user.service');
-const authService = require('../services/auth.service');
-const postService = require('../services/post.service');
-
-const userRepository = require('../repositories/user.repository');
-const postRepository = require('../repositories/post.repository');
-
-const userModel = require('../models/user.model');
-const postModel = require('../models/post.model');
+const path = require('path');
 
 const container = awilix.createContainer();
 
-const loadControllers = () => {
-  const controllers = {
-    userController: awilix.asFunction(userController),
-    authController: awilix.asFunction(authController),
-    postController: awilix.asFunction(postController),
-  };
+const getName = (fileName, suffix) => {
+  const name = fileName
+    .split('.')[0]
+    .split('_')
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join('')
+    .concat('', suffix);
 
-  container.register(controllers);
+  const result = name.charAt(0).toLowerCase() + name.slice(1);
+
+  return result;
+};
+
+const loadControllers = () => {
+  container.loadModules(
+    [
+      [
+        path.join(__dirname, '../controllers/**.controller.js'),
+        { register: awilix.asFunction },
+      ],
+    ],
+    {
+      formatName: (fileName) => getName(fileName, 'Controller'),
+    }
+  );
 };
 
 const loadServices = () => {
-  const services = {
-    userService: awilix.asFunction(userService),
-    authService: awilix.asFunction(authService),
-    postService: awilix.asFunction(postService),
-  };
-
-  container.register(services);
+  container.loadModules(
+    [
+      [
+        path.join(__dirname, '../services/**.service.js'),
+        { register: awilix.asFunction },
+      ],
+    ],
+    {
+      formatName: (fileName) => getName(fileName, 'Service'),
+    }
+  );
 };
 
 const loadRepositories = () => {
-  const repositories = {
-    userRepository: awilix.asFunction(userRepository),
-    postRepository: awilix.asFunction(postRepository),
-  };
-
-  container.register(repositories);
+  container.loadModules(
+    [
+      [
+        path.join(__dirname, '../repositories/**.repository.js'),
+        { register: awilix.asFunction },
+      ],
+    ],
+    {
+      formatName: (fileName) => getName(fileName, 'Repository'),
+    }
+  );
 };
 
 const loadModels = () => {
-  const models = {
-    userModel: awilix.asValue(userModel),
-    postModel: awilix.asValue(postModel),
-  };
-
-  container.register(models);
+  container.loadModules(
+    [
+      [
+        path.join(__dirname, '../models/**.model.js'),
+        { register: awilix.asValue },
+      ],
+    ],
+    {
+      formatName: (fileName) => getName(fileName, 'Model'),
+    }
+  );
 };
 
 const loadContainer = () => {
