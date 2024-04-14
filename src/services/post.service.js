@@ -3,7 +3,7 @@ const { ApiError } = require('../utils/error_handler.util');
 
 module.exports = ({ fileStorageService, postRepository }) => {
   const createPost = async ({ files, ...data }) => {
-    const attachments = await fileStorageService.uploadFiles(files);
+    const attachments = await fileStorageService.uploadFiles(files, 'posts');
     return await postRepository.createPost({ ...data, attachments });
   };
 
@@ -19,7 +19,7 @@ module.exports = ({ fileStorageService, postRepository }) => {
 
   const updatePost = async (id, { files, ...data }) => {
     await getPostById(id);
-    const attachments = await fileStorageService.uploadFiles(files);
+    const attachments = await fileStorageService.uploadFiles(files, 'posts');
     return await postRepository.updatePostById(id, { ...data, attachments });
   };
 
