@@ -5,6 +5,9 @@ const {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_BUCKET_NAME,
 } = require('../constants/env.constant');
+const {
+  UPLOAD_ERROR,
+} = require('../constants/errors/cloudinary.error.constant');
 const { ApiError } = require('../utils/error_handler.util');
 
 cloudinary.config({
@@ -20,13 +23,7 @@ const uploadFileToCloudinary = (file, folder) => {
         { folder: `${CLOUDINARY_BUCKET_NAME}/${folder}` },
         (error, result) => {
           if (error) {
-            reject(
-              new ApiError(
-                'There is an error uploading files to cloudinary',
-                500,
-                null
-              )
-            );
+            reject(new ApiError(UPLOAD_ERROR, 500, null));
           } else {
             resolve(result);
           }
