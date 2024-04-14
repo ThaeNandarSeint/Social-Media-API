@@ -37,7 +37,6 @@ const UPDATE_OWN_PROFILE = z.object({
   body: BASE_USER.shape.body
     .pick({
       name: true,
-      email: true,
     })
     .partial(),
 });

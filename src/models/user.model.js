@@ -30,6 +30,11 @@ const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    avatar: {
+      url: String,
+      key: String,
+      filename: String,
+    },
   },
   {
     timestamps: true,

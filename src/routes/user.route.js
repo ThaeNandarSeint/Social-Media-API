@@ -1,3 +1,4 @@
+const { upload } = require('../libs/multer');
 const { container } = require('../loaders/container.loader');
 const { authenticate } = require('../middlewares/authenticate.middleware');
 const { validateSchema } = require('../middlewares/validate_schema.middleware');
@@ -28,6 +29,7 @@ router.patch(
 
 router.patch(
   '/me',
+  upload.single('avatar'),
   validateSchema(UPDATE_OWN_PROFILE),
   userController.updateOwnProfile
 );

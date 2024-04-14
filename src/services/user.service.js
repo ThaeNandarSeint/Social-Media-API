@@ -5,7 +5,7 @@ const { USER_NOT_FOUND } = require('../constants/errors/user.error.constant');
 const { verifyPassword } = require('../utils/auth.util');
 const { ApiError } = require('../utils/error_handler.util');
 
-module.exports = ({ userRepository }) => {
+module.exports = ({ fileStorageService, userRepository }) => {
   const getAllUsers = async (query) => {
     return await userRepository.getAllUsers(query);
   };
@@ -16,10 +16,10 @@ module.exports = ({ userRepository }) => {
     return user;
   };
 
-  const updateUser = async (id, data) => {
-    const user = await userRepository.updateUserById(id, data);
-    if (!user) throw ApiError.badRequest(USER_NOT_FOUND);
-    return user;
+  const updateUser = async (id, { file, ...data }) => {
+    await getUserById(id);
+    const avatar = await fileStorageService.uploadFile(file, 'users');
+    return await userRepository.updateUserById(id, { ...data, avatar });
   };
 
   const updateOwnPassword = async (id, data) => {

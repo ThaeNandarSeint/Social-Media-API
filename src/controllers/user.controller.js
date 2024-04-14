@@ -39,7 +39,10 @@ module.exports = ({ userService }) => {
   });
 
   const updateOwnProfile = catchAsync(async (req, res) => {
-    const data = await userService.updateUser(req.user._id, req.body);
+    const data = await userService.updateUser(req.user._id, {
+      ...req.body,
+      file: req.file,
+    });
 
     sendSuccessResponse({
       res,
