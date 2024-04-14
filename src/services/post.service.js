@@ -17,10 +17,10 @@ module.exports = ({ fileStorageService, postRepository }) => {
     return post;
   };
 
-  const updatePost = async (id, data) => {
-    const post = await postRepository.updatePostById(id, data);
-    if (!post) throw ApiError.badRequest(POST_NOT_FOUND);
-    return post;
+  const updatePost = async (id, { files, ...data }) => {
+    await getPostById(id);
+    const attachments = await fileStorageService.uploadFiles(files);
+    return await postRepository.updatePostById(id, { ...data, attachments });
   };
 
   return {

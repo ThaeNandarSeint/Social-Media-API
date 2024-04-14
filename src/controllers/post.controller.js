@@ -37,7 +37,10 @@ module.exports = ({ postService }) => {
   });
 
   const updatePost = catchAsync(async (req, res) => {
-    const data = await postService.updatePost(req.params.id, req.body);
+    const data = await postService.updatePost(req.params.id, {
+      ...req.body,
+      files: req.files,
+    });
 
     sendSuccessResponse({
       res,

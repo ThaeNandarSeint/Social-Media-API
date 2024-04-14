@@ -26,6 +26,11 @@ router.post(
   postController.createPost
 );
 
-router.patch('/:id', validateSchema(UPDATE_POST), postController.updatePost);
+router.patch(
+  '/:id',
+  upload.array('attachments'),
+  validateSchema(UPDATE_POST),
+  postController.updatePost
+);
 
 module.exports = router;
