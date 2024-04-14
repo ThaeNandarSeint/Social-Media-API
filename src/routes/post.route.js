@@ -1,3 +1,4 @@
+const { upload } = require('../libs/multer');
 const { container } = require('../loaders/container.loader');
 const { authenticate } = require('../middlewares/authenticate.middleware');
 const { validateSchema } = require('../middlewares/validate_schema.middleware');
@@ -18,7 +19,12 @@ router.get('/', validateSchema(GET_ALL_POSTS), postController.getAllPosts);
 
 router.get('/:id', validateSchema(GET_POST), postController.getPostById);
 
-router.post('/', validateSchema(CREATE_POST), postController.createPost);
+router.post(
+  '/',
+  upload.array('attachments'),
+  validateSchema(CREATE_POST),
+  postController.createPost
+);
 
 router.patch('/:id', validateSchema(UPDATE_POST), postController.updatePost);
 

@@ -11,15 +11,7 @@ const {
   validateEnvVariables();
   await connectDatabase();
 
-  const server = app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-  });
-
-  process.on('unhandledRejection', (err) => {
-    console.log('UnhandledRejection occurred.');
-    console.log(err);
-    server.close(() => {
-      process.exit(1);
-    });
   });
 })();

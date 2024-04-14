@@ -24,6 +24,14 @@ const postSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    attachments: [
+      {
+        url: String,
+        key: String,
+        filename: String,
+        mimetype: String,
+      },
+    ],
   },
   {
     timestamps: true,

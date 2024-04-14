@@ -6,6 +6,7 @@ module.exports = ({ postService }) => {
     const data = await postService.createPost({
       ...req.body,
       author: req.user._id,
+      files: req.files,
     });
 
     sendSuccessResponse({

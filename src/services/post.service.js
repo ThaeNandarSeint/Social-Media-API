@@ -1,9 +1,10 @@
 const { POST_NOT_FOUND } = require('../constants/errors/post.error.constant');
 const { ApiError } = require('../utils/error_handler.util');
 
-module.exports = ({ postRepository }) => {
-  const createPost = async (data) => {
-    return await postRepository.createPost(data);
+module.exports = ({ fileStorageService, postRepository }) => {
+  const createPost = async ({ files, ...data }) => {
+    const attachments = await fileStorageService.uploadFiles(files);
+    return await postRepository.createPost({ ...data, attachments });
   };
 
   const getAllPosts = async (query) => {
