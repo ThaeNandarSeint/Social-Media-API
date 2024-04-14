@@ -20,7 +20,10 @@ const uploadFileToCloudinary = (file, folder) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
-        { folder: `${CLOUDINARY_BUCKET_NAME}/${folder}` },
+        {
+          folder: `${CLOUDINARY_BUCKET_NAME}/${folder}`,
+          resource_type: 'auto',
+        },
         (error, result) => {
           if (error) {
             reject(new ApiError(UPLOAD_ERROR, 500, null));
