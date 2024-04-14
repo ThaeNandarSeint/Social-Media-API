@@ -6,10 +6,7 @@ module.exports = {
     node: true,
     'jest/globals': true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   plugins: ['jsdoc', 'prettier', 'jest'],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -18,6 +15,6 @@ module.exports = {
     'prettier/prettier': 'warn',
     'jsdoc/no-undefined-types': 0,
     'no-duplicate-imports': 'error',
-    'no-console': 'warn'
+    'no-console': 'warn',
   },
 };
