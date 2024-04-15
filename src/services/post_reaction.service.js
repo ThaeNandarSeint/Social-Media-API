@@ -21,7 +21,7 @@ module.exports = ({ postReactionRepository }) => {
     return await postReactionRepository.updateReactionById(id, data);
   };
 
-  const giveReaction = async (data) => {
+  const invokeReaction = async (data) => {
     const [oldReaction, relatedReaction] = await Promise.all([
       postReactionRepository.getReaction(data),
       postReactionRepository.getReaction({
@@ -44,6 +44,6 @@ module.exports = ({ postReactionRepository }) => {
     getAllReactions,
     getReactionById,
     updateReaction,
-    giveReaction,
+    invokeReaction,
   };
 };

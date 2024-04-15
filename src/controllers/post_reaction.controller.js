@@ -20,8 +20,8 @@ module.exports = ({ postReactionService }) => {
     });
   });
 
-  const giveReaction = catchAsync(async (req, res) => {
-    const data = await postReactionService.giveReaction({
+  const invokeReaction = catchAsync(async (req, res) => {
+    const data = await postReactionService.invokeReaction({
       ...req.body,
       actor: req.user._id,
     });
@@ -35,6 +35,6 @@ module.exports = ({ postReactionService }) => {
   return {
     getAllReactions,
     getReactionById,
-    giveReaction,
+    invokeReaction,
   };
 };

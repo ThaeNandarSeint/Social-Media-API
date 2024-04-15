@@ -4,7 +4,7 @@ const { validateSchema } = require('../middlewares/validate_schema.middleware');
 const {
   GET_ALL_POST_REACTIONS,
   GET_POST_REACTION,
-  GIVE_REACTION,
+  INVOKE_REACTION,
 } = require('../schemas/post_reaction.schema');
 const router = require('express').Router();
 
@@ -26,8 +26,8 @@ router.get(
 
 router.post(
   '/',
-  validateSchema(GIVE_REACTION),
-  postReactionController.giveReaction
+  validateSchema(INVOKE_REACTION),
+  postReactionController.invokeReaction
 );
 
 module.exports = router;
