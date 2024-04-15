@@ -34,11 +34,16 @@ module.exports = ({ userModel }) => {
     return await userModel.findByIdAndUpdate(id, data, { new: true });
   };
 
+  const deleteUser = async (filter) => {
+    return await userModel.deleteOne(filter);
+  };
+
   return {
     getAllUsers,
     getUserByUniqueField,
     getUserById,
     createUser,
     updateUserById,
+    deleteUser,
   };
 };

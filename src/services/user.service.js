@@ -18,7 +18,10 @@ module.exports = ({ fileStorageService, userRepository }) => {
 
   const updateUser = async (id, { file, ...data }) => {
     await getUserById(id);
-    const avatar = await fileStorageService.uploadFile(file, 'users');
+    let avatar;
+    if (file) {
+      avatar = await fileStorageService.uploadFile(file, 'users');
+    }
     return await userRepository.updateUserById(id, { ...data, avatar });
   };
 
@@ -36,10 +39,16 @@ module.exports = ({ fileStorageService, userRepository }) => {
     });
   };
 
+  const deleteUser = async (id) => {
+    await getUserById(id);
+    await userRepository.deleteUser({ id });
+  };
+
   return {
     getAllUsers,
     getUserById,
     updateUser,
     updateOwnPassword,
+    deleteUser,
   };
 };

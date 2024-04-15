@@ -33,7 +33,7 @@ const GET_USER = PARAM_ID;
 
 const GET_ALL_USERS = BASE_QUERY;
 
-const UPDATE_OWN_PROFILE = z.object({
+const UPDATE_USER = z.object({
   body: BASE_USER.shape.body
     .pick({
       name: true,
@@ -46,5 +46,5 @@ module.exports = {
   UPDATE_OWN_PASSWORD,
   GET_USER,
   GET_ALL_USERS,
-  UPDATE_OWN_PROFILE,
+  UPDATE_USER,
 };

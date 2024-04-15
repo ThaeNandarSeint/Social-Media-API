@@ -2,11 +2,12 @@ const { upload } = require('../libs/multer');
 const { container } = require('../loaders/container.loader');
 const { authenticate } = require('../middlewares/authenticate.middleware');
 const { validateSchema } = require('../middlewares/validate_schema.middleware');
+const { PARAM_ID } = require('../schemas/param_id.schema');
 const {
   UPDATE_OWN_PASSWORD,
   GET_USER,
   GET_ALL_USERS,
-  UPDATE_OWN_PROFILE,
+  UPDATE_USER,
 } = require('../schemas/user.schema');
 
 const router = require('express').Router();
@@ -30,8 +31,22 @@ router.patch(
 router.patch(
   '/me',
   upload.single('avatar'),
-  validateSchema(UPDATE_OWN_PROFILE),
+  validateSchema(UPDATE_USER),
   userController.updateOwnProfile
 );
+
+router.patch(
+  '/:id/disable',
+  validateSchema(PARAM_ID),
+  userController.disableUser
+);
+
+router.patch(
+  '/:id/enable',
+  validateSchema(PARAM_ID),
+  userController.enableUser
+);
+
+router.delete('/:id', validateSchema(GET_USER), userController.deleteUser);
 
 module.exports = router;

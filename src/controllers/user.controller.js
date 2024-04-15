@@ -50,11 +50,45 @@ module.exports = ({ userService }) => {
     });
   });
 
+  const disableUser = catchAsync(async (req, res) => {
+    const data = await userService.updateUser(req.user._id, {
+      isActive: false,
+    });
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
+  const enableUser = catchAsync(async (req, res) => {
+    const data = await userService.updateUser(req.user._id, {
+      isActive: true,
+    });
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
+  const deleteUser = catchAsync(async (req, res) => {
+    const data = await userService.deleteUser(req.user._id);
+
+    sendSuccessResponse({
+      res,
+      data,
+    });
+  });
+
   return {
     getAllUsers,
     getMyInfo,
     updateOwnPassword,
     getUserById,
     updateOwnProfile,
+    disableUser,
+    enableUser,
+    deleteUser,
   };
 };
